@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PANG & PPT Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background orbs -->
+  <div class="ambient">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <div class="app">
+
+    <!-- TOP BAR -->
+    <header class="topbar glass-thin">
+      <div class="topbar-brand">
+        <div class="app-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <span class="app-name">PANG & PPT</span>
+        <span class="app-tag">Studio</span>
+      </div>
+
+      <nav class="mode-switcher glass-pill">
+        <button class="mode-btn active" data-workspace="optimizer">Optimize</button>
+        <button class="mode-btn" data-workspace="repair">Fix Effects</button>
+        <button class="mode-btn" data-workspace="pdf2ppt">PDF → PPT</button>
+        <button class="mode-btn" data-workspace="ppt2pdf">PPT → PDF</button>
+        <button class="mode-btn" data-workspace="batch">Batch</button>
+      </nav>
+
+      <div class="topbar-actions">
+        <label for="file-input-dialog" class="topbar-open-btn glass-btn">Open</label>
+        <div class="engine-pill glass-pill">
+          <span class="pulse"></span>
+          <span>Engine Active</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <main class="workspace">
+
+      <!-- LEFT PANEL -->
+      <aside class="panel-left glass">
+        <!-- File info -->
+        <div class="file-card glass-inner" id="file-card">
+          <div class="file-icon-lg">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+          </div>
+          <div class="file-info">
+            <div class="file-name" id="lbl-filename">No document</div>
+            <div class="file-meta" id="lbl-filesize">Drop a file to begin</div>
+          </div>
+        </div>
+
+        <div class="section-label">PRESETS</div>
+        <div class="preset-stack" id="preset-container">
+          <button class="preset-item active" data-preset="balanced">
+            <span class="preset-name">Balanced</span>
+            <span class="preset-dpi">150 DPI</span>
+          </button>
+          <button class="preset-item" data-preset="max_quality">
+            <span class="preset-name">Max Quality</span>
+            <span class="preset-dpi">300 DPI</span>
+          </button>
+          <button class="preset-item" data-preset="mobile_friendly">
+            <span class="preset-name">Mobile</span>
+            <span class="preset-dpi">120 DPI</span>
+          </button>
+          <button class="preset-item" data-preset="smallest_size">
+            <span class="preset-name">Smallest</span>
+            <span class="preset-dpi">96 DPI</span>
+          </button>
+          <button class="preset-item" data-preset="print_ready">
+            <span class="preset-name">Print Ready</span>
+            <span class="preset-dpi">300 DPI</span>
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="meta-line">PyMuPDF 2.1 · Local Engine</div>
+        </div>
+      </aside>
+
+      <!-- CENTER STAGE -->
+      <section class="stage">
+
+        <!-- DROP ZONE -->
+        <div class="drop-zone" id="drop-zone">
+          <input type="file" id="file-input-dialog" style="display:none" accept=".pdf,.pptx,.ppt">
+          <div class="drop-inner glass">
+            <div class="drop-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <polyline points="16 16 12 12 8 16"/>
+                <line x1="12" y1="12" x2="12" y2="21"/>
+                <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+              </svg>
+            </div>
+            <h2 class="drop-title">Drop your document</h2>
+            <p class="drop-sub">PDF, PPTX · Up to 500 MB</p>
+            <label for="file-input-dialog" class="btn-open glass-btn">Choose File</label>
+          </div>
+        </div>
+
+        <!-- DOCUMENT VIEW -->
+        <div class="doc-view" id="document-view" style="display:none">
+
+          <!-- PAGE TOOLBAR -->
+          <div class="page-toolbar glass-thin">
+            <div class="toolbar-left">
+              <button class="icon-btn" id="btn-prev-page">‹</button>
+              <span class="page-label"><span id="current-page-num">1</span> / <span id="total-pages-num">1</span></span>
+              <button class="icon-btn" id="btn-next-page">›</button>
+              <div class="divider-v"></div>
+              <button class="toggle-btn active" id="btn-view-single">Original</button>
+              <button class="toggle-btn" id="btn-view-split">Compare</button>
+            </div>
+            <div class="toolbar-right">
+              <button class="icon-btn" id="btn-zoom-out">−</button>
+              <span class="zoom-lbl" id="zoom-value">100%</span>
+              <button class="icon-btn" id="btn-zoom-in">+</button>
+              <button class="icon-btn" id="btn-zoom-fit">Fit</button>
+            </div>
+          </div>
+
+          <!-- PREVIEW CANVAS -->
+          <div class="canvas-scroll" id="stage-scroll">
+            <div class="canvas-stage" id="artboard-wrapper"></div>
+          </div>
+
+          <!-- STATUS BAR -->
+          <div class="status-bar glass-thin">
+            <span id="footer-dimensions">—</span>
+            <span class="dot">·</span>
+            <span id="footer-vectors">—</span>
+            <span class="dot">·</span>
+            <span id="footer-fonts">—</span>
+            <div class="status-right">
+              <div class="inline-progress" id="process-progress-container" style="display:none">
+                <div class="inline-bar">
+                  <div class="inline-fill" id="process-progress-fill"></div>
+                </div>
+                <span class="inline-text" id="process-progress-text"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPLOAD DOCK HUD -->
+        <div class="dock-hud glass" id="dock-upload-hud" style="display:none">
+          <div class="dock-spinner"></div>
+          <div class="dock-body">
+            <div class="dock-row">
+              <span class="dock-name" id="dock-hud-filename">Uploading…</span>
+              <span class="dock-pct" id="dock-hud-percentage">0%</span>
+            </div>
+            <div class="dock-track">
+              <div class="dock-fill" id="dock-hud-bar"></div>
+            </div>
+            <div class="dock-row dock-row-sm">
+              <span id="dock-hud-bytes">0 B</span>
+              <span id="dock-hud-speed">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- EXPORT NOTIFICATION TOAST -->
+        <div class="export-toast glass" id="export-toast" style="display:none">
+          <div class="toast-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="toast-body">
+            <div class="toast-title" id="toast-title">Export Complete</div>
+            <div class="toast-sub" id="toast-sub">Saved successfully</div>
+          </div>
+          <a class="toast-action glass-btn" id="btn-download-export" href="#" download style="display:none">Download</a>
+          <button class="toast-action glass-btn-accent" id="btn-open-location">Open Location</button>
+          <button class="toast-close" id="btn-close-toast" title="Dismiss">×</button>
+        </div>
+
+      </section>
+
+      <!-- RIGHT INSPECTOR -->
+      <aside class="panel-right glass">
+        <div class="inspector-tabs glass-pill">
+          <button class="itab active" data-tab="controls">Controls</button>
+          <button class="itab" data-tab="analysis">Analysis</button>
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="itab-pane active" id="itab-controls">
+          <button class="run-btn glass-btn-accent" id="btn-execute-action">
+            <span id="btn-action-label">Compress & Optimize</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
+
+          <div class="control-section">
+            <div class="control-label">Resolution</div>
+            <select class="glass-select" id="sel-dpi">
+              <option value="72">72 DPI · Screen</option>
+              <option value="96">96 DPI · Email</option>
+              <option value="120">120 DPI · Mobile</option>
+              <option value="150" selected>150 DPI · Balanced</option>
+              <option value="200">200 DPI · High Res</option>
+              <option value="300">300 DPI · Print</option>
+            </select>
+          </div>
+
+          <div class="control-section">
+            <div class="control-label-row">
+              <span class="control-label">JPEG Quality</span>
+              <span class="control-val" id="val-jpeg-quality">82%</span>
+            </div>
+            <input type="range" class="glass-slider" id="slider-jpeg-quality" min="40" max="100" value="82">
+          </div>
+
+          <div class="control-section">
+            <div class="toggle-row">
+              <span class="control-label">Preserve PNG Alpha</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-preserve-png" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="control-label">Strip Metadata Bloat</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-clean-metadata" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="control-label">Selective Flatten</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-flatten-problematic" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="control-label">Fix Blend Modes</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-repair-transparency" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="control-section">
+            <div class="control-label">Conversion Mode</div>
+            <select class="glass-select" id="sel-ppt-mode">
+              <option value="high_fidelity" selected>High-Fidelity + Editable Text</option>
+              <option value="editable">Fully Editable Shapes</option>
+            </select>
+          </div>
+
+          <div class="control-section">
+            <div class="toggle-row">
+              <span class="control-label">Reconstruct Vectors</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-extract-vectors" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <span class="control-label">Preserve Typography</span>
+              <label class="glass-toggle">
+                <input type="checkbox" id="toggle-group-words" checked>
+                <span class="toggle-track"><span class="toggle-thumb"></span></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ANALYSIS -->
+        <div class="itab-pane" id="itab-analysis" style="display:none">
+          <div class="stats-grid glass-inner">
+            <div class="stat-row"><span class="stat-k">Artboard</span><span class="stat-v" id="meta-artboard">—</span></div>
+            <div class="stat-row"><span class="stat-k">Pages</span><span class="stat-v" id="meta-pages">—</span></div>
+            <div class="stat-row"><span class="stat-k">Fonts</span><span class="stat-v" id="meta-fonts-count">—</span></div>
+            <div class="stat-row"><span class="stat-k">Images</span><span class="stat-v" id="meta-images-count">—</span></div>
+            <div class="stat-row"><span class="stat-k">Vectors</span><span class="stat-v" id="meta-vectors-count">—</span></div>
+            <div class="stat-row"><span class="stat-k">Transparency</span><span class="stat-v" id="meta-transparency">—</span></div>
+          </div>
+
+          <div class="control-label" style="margin-top:16px">Fonts Detected</div>
+          <div class="font-cloud" id="font-list-container"></div>
+
+          <div class="control-label" style="margin-top:16px">Notices</div>
+          <div id="alerts-container"></div>
+        </div>
+      </aside>
+
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

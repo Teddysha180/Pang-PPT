@@ -1,0 +1,22 @@
+{
+  "name": "pang-ppt-studio",
+  "version": "1.0.0",
+  "description": "PANG & PPT Studio - Professional PDF, PowerPoint & Document Studio",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "pdf",
+    "powerpoint",
+    "optimizer",
+    "illustrator",
+    "studio"
+  ],
+  "author": "PANG & PPT Studio",
+  "license": "Proprietary",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^28.2.0"
+  }
+}

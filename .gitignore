@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Studio temp files
+.studio_temp/
+
+# Debug/test artifacts
+*.png
+*.jpg
+*.pptx
+*.pdf
+!sample_illustrator_test.pdf
+
+# Node
+node_modules/
+package-lock.json
+
+# OS
+Thumbs.db
+.DS_Store
